@@ -1,0 +1,102 @@
+<!doctype html>
+<html>
+<head>
+  <meta charset="utf-8">
+  <title>Django Highcharts Example</title>
+</head>
+<body>
+  <a href="{% url 'home' %}">Return to homepage</a>
+  <div id="container"></div>
+  <script src="https://code.highcharts.com/highcharts.src.js"></script>
+  <script src="https://code.highcharts.com/modules/series-label.js"></script>
+  <script>
+    Highcharts.chart('container', {
+        chart: {
+            type: 'spline',
+
+
+        },
+        title: {
+            text: '코로나19-회복자'
+        },
+        xAxis: {
+            type: 'datetime',
+
+
+            categories: [
+              {% for entry in dataset %}
+                '{{ entry.Date }}'{% if not forloop.last %}, {% endif %}
+              {% endfor %}
+            ],
+
+
+        },
+        yAxis: {'labels': {'format': '{value} /백만명', 'style': {'color': 'blue'}}, 'title': {'text': '합계건수', 'style': {'color': 'blue'}}},
+        plotOptions: {'series' : {'marker': {'enabled': false}}},
+        legend: {
+        layout: 'vertical',
+        align: 'right',
+        verticalAlign: 'middle'
+    },
+
+        series: [{
+            name: 'China',
+            lineWidth: 3,
+            data: [
+              {% for entry in dataset %}
+                {{ entry.China }}{% if not forloop.last %}, {% endif %}
+              {% endfor %}
+
+            ],
+
+
+        }, {
+            name: 'France',
+            lineWidth: 3,
+            data: [
+              {% for entry in dataset %}
+                {{ entry.France }}{% if not forloop.last %}, {% endif %}
+              {% endfor %}
+            ],
+
+        },{
+            name: 'Germany',
+            lineWidth: 3,
+            data: [
+              {% for entry in dataset %}
+                {{ entry.Germany }}{% if not forloop.last %}, {% endif %}
+              {% endfor %}
+            ],
+
+        },{
+            name: 'Korea',
+            lineWidth: 3,
+            data: [
+              {% for entry in dataset %}
+                {{ entry.Korea_South }}{% if not forloop.last %}, {% endif %}
+              {% endfor %}
+            ],
+
+        },{
+            name: 'US',
+            lineWidth: 3,
+            data: [
+              {% for entry in dataset %}
+                {{ entry.US }}{% if not forloop.last %}, {% endif %}
+              {% endfor %}
+            ],
+
+        },{
+            name: 'United_Kingdom',
+            lineWidth: 3,
+            data: [
+              {% for entry in dataset %}
+                {{ entry.United_Kingdom }}{% if not forloop.last %}, {% endif %}
+              {% endfor %}
+            ],
+
+        }]
+    });
+  </script>
+</body>
+</html>
